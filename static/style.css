@@ -1,0 +1,456 @@
+/* Base Styles */
+body {
+    background: #f9f6ff;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Top Bar */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: #007BFF;
+    color: #fff;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: #6f44ff;
+}
+
+.lang-dropdown select {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+/* Main Content */
+.main-box {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.main-box h1 {
+    font-size: 38px;
+    margin-bottom: 10px;
+    font-weight: 800;
+    color: #1c1c1c;
+}
+
+.main-box p {
+    font-size: 18px;
+    color: #555;
+}
+
+/* Input Area */
+.input-area {
+    margin-top: 25px;
+}
+
+textarea {
+    width: 60%;
+    height: 120px;
+    font-size: 18px;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    resize: vertical;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+input[type="file"] {
+    margin-top: 15px;
+}
+
+.send-button {
+    margin-top: 15px;
+    padding: 12px 25px;
+    background-color: #8100d4;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.send-button:hover {
+    background-color: #6300a3;
+}
+
+/* Result Box */
+.result-box {
+    margin-top: 40px;
+    background-color: white;
+    padding: 25px;
+    display: inline-block;
+    text-align: left;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    max-width: 90%;
+}
+
+/* Fade-in Animation */
+.fade-in {
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.result-box img {
+    margin-top: 20px;
+    border-radius: 8px;
+}
+
+.download-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 32px;
+}
+
+.download-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 90px;
+    background: #8000ff;
+    color: #fff;
+    border-radius: 16px;
+    font-size: 2em;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    transition: background 0.2s;
+    box-shadow: 0 2px 16px #e0d6f7;
+    cursor: pointer;
+    text-align: center;
+}
+
+.download-btn:hover {
+    background: #a259ff;
+}
+
+/* Why Use Section */
+.why-use-section {
+    padding: 60px 20px;
+    background: #f2f0fb;
+    text-align: center;
+}
+
+.why-use-section h2 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #1c1c1c;
+    margin-bottom: 20px;
+}
+
+.why-use-section p {
+    font-size: 18px;
+    max-width: 750px;
+    margin: 0 auto;
+    line-height: 1.6;
+    color: #4a4a4a;
+}
+
+/* Feature Section */
+.feature-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 60px 20px;
+    background: #ffffff;
+    gap: 50px;
+}
+
+.feature-text {
+    max-width: 550px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #4a4a4a;
+}
+
+.feature-text h2 {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #1c1c1c;
+}
+
+.feature-card {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+    max-width: 400px;
+    flex: 1;
+}
+
+.feature-card img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.feature-card h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.feature-card p {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Testimonials Section */
+.testimonials-section {
+    padding: 60px 20px;
+    background: #f9f6ff;
+    text-align: center;
+}
+
+.testimonials-section h2 {
+    font-size: 32px;
+    margin-bottom: 40px;
+    font-weight: 800;
+    color: #1c1c1c;
+}
+
+.testimonial-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+}
+
+.testimonial-card {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 25px;
+    width: 320px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.07);
+    text-align: left;
+}
+
+.testimonial-card .name {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.testimonial-card .role {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.testimonial-card .stars {
+    color: #ffcc00;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+/* How It Works Section */
+.how-it-works {
+    padding: 60px 20px;
+    background-color: #ffffff;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px;
+}
+
+.steps {
+    max-width: 550px;
+}
+
+.steps h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+    color: #1c1c1c;
+}
+
+.steps p {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #4a4a4a;
+}
+
+.step-number {
+    font-size: 20px;
+    font-weight: bold;
+    background: #6f44ff;
+    color: white;
+    border-radius: 50%;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    line-height: 32px;
+    margin-right: 10px;
+}
+
+.supported-topics {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 450px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+}
+
+.supported-topics h2 {
+    font-size: 26px;
+    color: #1c1c1c;
+    margin-bottom: 20px;
+}
+
+.supported-topics h4 {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.supported-topics ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.supported-topics ul li {
+    padding: 5px 0;
+    font-size: 16px;
+    color: #555;
+}
+
+.supported-topics ul li::before {
+    content: "✔";
+    color: #6f44ff;
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+/* Loader Wrapper */
+.loader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    display: none;
+}
+
+/* Loader Spinner */
+.loader {
+    border: 8px solid #eee;
+    border-top: 8px solid #6f44ff;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    animation: spin 1s linear infinite;
+}
+
+/* Spinner Animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.input-flex-row {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 30px;
+}
+.upload-area {
+    border: 2px solid #8000ff;
+    border-radius: 16px;
+    background: #faf7ff;
+    width: 340px;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: border 0.2s;
+    margin-bottom: 0;
+}
+.upload-area:hover {
+    border: 2px solid #a259ff;
+}
+.upload-area input[type="file"] {
+    display: none;
+}
+.upload-label {
+    display: inline-block;
+    padding: 12px 28px;
+    background: #cdb3ff;
+    color: #8000ff;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 18px;
+    font-size: 1.1em;
+    transition: background 0.2s;
+}
+.upload-label:hover {
+    background: #a259ff;
+    color: #fff;
+}
+.upload-area .desc {
+    color: #444;
+    font-size: 1.1em;
+    margin-top: 18px;
+}
+.textarea-area {
+    flex: 1;
+    min-width: 340px;
+}
+.solve-btn {
+    background: linear-gradient(90deg, #8000ff 60%, #f080ff 100%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 16px 60px;
+    font-size: 1.3em;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+.solve-btn:hover {
+    background: linear-gradient(90deg, #a259ff 60%, #f080ff 100%);
+}
+.solution-steps {
+    background: #fafafa;
+    border-radius: 16px;
+    padding: 24px;
+    margin-top: 18px;
+    font-size: 1.15em;
+    color: #222;
+    font-style: italic;
+}
+.solution-steps b {
+    font-style: normal;
+    color: #8000ff;
+}
+

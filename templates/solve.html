@@ -1,0 +1,17 @@
+<!-- templates/solve.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Math Solver</title>
+</head>
+<body>
+    <h1>Welcome to the Math Solver Page</h1>
+    <p>This is where you'll input and solve math problems.</p>
+
+    <form method="post" action="/solve_math">
+        <label for="question">Enter a math problem:</label><br>
+        <input type="text" id="question" name="question" required><br><br>
+        <button type="submit">Solve</button>
+    </form>
+</body>
+</html>

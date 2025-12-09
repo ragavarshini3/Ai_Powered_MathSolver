@@ -1,0 +1,84 @@
+<!-- filepath: templates/review.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Review - Math Solver AI</title>
+    <style>
+        body {
+            background-color: #0f172a;
+            font-family: Arial, sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .review-container {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #38bdf8;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input, textarea, select {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #38bdf8;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0ea5e9;
+        }
+    </style>
+</head>
+<body>
+    <div class="review-container">
+        <h2>Submit Your Review</h2>
+        <form action="/submit_review" method="POST">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <textarea name="comment" placeholder="Write your review here..." required></textarea>
+            <label for="rating">Rating:</label>
+            <select name="rating" required>
+                <option value="">Select stars</option>
+                <option value="⭐">⭐</option>
+                <option value="⭐⭐">⭐⭐</option>
+                <option value="⭐⭐⭐">⭐⭐⭐</option>
+                <option value="⭐⭐⭐⭐">⭐⭐⭐⭐</option>
+                <option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐</option>
+            </select>
+            <button type="submit">Submit Review</button>
+        </form>
+    </div>
+</body>
+</html>

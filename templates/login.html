@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Math Solver AI</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #00030dff 0%, rgb(123, 168, 213) 100%);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+        }
+        .nav-links {
+            text-align: right;
+            margin: 0;
+            padding: 18px 36px 0 0;
+        }
+        .nav-links a {
+            color: #ff4800;
+            text-decoration: none;
+            margin: 0 18px;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: #a259ff;
+            text-decoration: underline;
+        }
+        .login-box {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 2px 24px #e0d6f7;
+            width: 370px;
+            margin: 80px auto 0 auto;
+            padding: 44px 36px 36px 36px;
+            text-align: center;
+        }
+        .login-box h2 {
+            color: #8000ff;
+            margin-bottom: 28px;
+            font-size: 2em;
+            letter-spacing: 1px;
+        }
+        .login-box input[type="text"], .login-box input[type="password"] {
+            width: 92%;
+            padding: 13px;
+            margin: 12px 0;
+            border: 1.5px solid #d1b3ff;
+            border-radius: 8px;
+            font-size: 1em;
+            background: #faf7ff;
+            transition: border 0.2s;
+        }
+        .login-box input[type="text"]:focus, .login-box input[type="password"]:focus {
+            border: 1.5px solid #8000ff;
+            outline: none;
+        }
+        .login-box button {
+            width: 100%;
+            padding: 13px;
+            background: #8000ff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-top: 22px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .login-box button:hover {
+            background: #a259ff;
+        }
+        .login-box .register-link {
+            margin-top: 22px;
+            display: block;
+            color: #8000ff;
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: 500;
+        }
+        .login-box .register-link:hover {
+            text-decoration: underline;
+            color: #a259ff;
+        }
+        .flash-message {
+            color: #d8000c;
+            background: #ffd2d2;
+            border-radius: 6px;
+            padding: 8px 0;
+            margin-bottom: 14px;
+            font-size: 1em;
+        }
+        .app-name {
+            text-align: center;
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #8000ff;
+            margin-top: 30px;
+            margin-bottom: 0;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-links">
+        <a href="{{ url_for('faq_page') }}">FAQ</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+    <div class="app-name">Math Solver AI</div>
+    <div class="login-box">
+        <h2>Login</h2>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="flash-message">
+              {% for message in messages %}
+                {{ message }}
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+        <form method="POST" action="{{ url_for('login') }}">
+            <input type="text" name="username" placeholder="Username" required><br>
+            <input type="password" name="password" placeholder="Password" required><br>
+            <button type="submit">Login</button>
+        </form>
+        <a class="register-link" href="{{ url_for('register') }}">Don't have an account? Register</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!-- templates/about.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>About - Math Solver AI</title>
+    <style>
+        body {
+            background-image: url("/static/images/math_bg.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+            color: white;
+            padding: 50px;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 700px;
+            margin: auto;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #00ffff;
+        }
+
+        a {
+            display: inline-block;
+            margin: 10px 10px 0 0;
+            padding: 10px 15px;
+            background-color: #00bcd4;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        a:hover {
+            background-color: #0097a7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>About Math Solver AI</h1>
+        <p>This AI-powered web application helps you solve various mathematical problems including arithmetic, algebra, calculus, and word problems. It offers step-by-step explanations, OCR-based image solving, and even lets you generate PDF solutions for your records.</p>
+        
+        <!-- Links to review and reviews page -->
+        <a href="{{ url_for('review') }}">✍ Submit a Review</a>
+        <a href="{{ url_for('show_reviews') }}">📖 View Reviews</a>
+        <a href="{{ url_for('index') }}">🔙 Go to Solver</a>
+    </div>
+</body>
+</html>

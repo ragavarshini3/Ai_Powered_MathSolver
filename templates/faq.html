@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FAQ - Math Solver AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="top-bar">
+        <div class="logo">Math Solver AI</div>
+        <div class="nav-links" style="float:right;">
+            <a href="{{ url_for('solve') }}">Home</a>
+            <a href="{{ url_for('faq_page') }}">FAQ</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+    <div class="main-box">
+        <h1>Frequently Asked Questions</h1>
+        <h3>What types of math problems can I solve?</h3>
+        <p>You can solve algebra, calculus (differentiation/integration), and basic word problems (area, perimeter, etc.).</p>
+        <h3>How do I use the image upload?</h3>
+        <p>Upload a clear image of your math problem. The app will try to extract and solve it.</p>
+        <h3>Why do some word problems not work?</h3>
+        <p>The app supports common patterns (area, perimeter, etc.). For complex word problems, try to rephrase or use mathematical expressions.</p>
+        <h3>How do I log out?</h3>
+        <p>Click the "Logout" link in the top bar.</p>
+    </div>
+</body>
+</html>
