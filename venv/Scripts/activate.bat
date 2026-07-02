@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=D:\internship_project\math_solver_aicopy4 27-7-2025\venv
+set VIRTUAL_ENV=C:\Users\Varsh\OneDrive\Desktop\maths_solver_ai_current\venv
 
 if not defined PROMPT set PROMPT=$P$G
 

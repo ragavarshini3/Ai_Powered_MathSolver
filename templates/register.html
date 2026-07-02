@@ -2,95 +2,656 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Register | Math Solver AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Math Solver AI</title>
     <style>
-        body {
-            background: linear-gradient(135deg, #00030dff 0%, rgb(123, 168, 213) 100%);
-            font-family: 'Segoe UI', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            box-sizing: border-box;
             margin: 0;
+            padding: 0;
         }
-        .register-container {
-            background: #fff;
-            padding: 48px 36px;
-            border-radius: 18px;
-            box-shadow: 0 8px 32px rgba(124,58,237,0.10);
-            text-align: center;
-            width: 350px;
+
+        body {
+            background-color: #03001e;
+            font-family: 'Outfit', sans-serif;
+            color: #ffffff;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            position: relative;
         }
-        h1 {
-            font-size: 2.3rem;
-            color: #7c3aed;
-            margin-bottom: 0.5em;
+
+        /* Glowing mesh background spheres */
+        .glow-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
         }
-        form {
+
+        .glow-sphere {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.25;
+            animation: float-slow 20s infinite alternate;
+        }
+
+        .glow-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #7f00ff 0%, #e100ff 100%);
+            top: -100px;
+            left: -100px;
+        }
+
+        .glow-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #00f2fe 0%, #4facfe 100%);
+            bottom: -150px;
+            right: 20%;
+            animation-delay: -5s;
+        }
+
+        @keyframes float-slow {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(80px, 50px) scale(1.1);
+            }
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* LEFT SIDE styling */
+        .left-side {
+            flex: 1.2;
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 60px 80px;
+            position: relative;
         }
-        input[type="text"], input[type="email"], input[type="password"] {
-            padding: 13px 12px;
-            border-radius: 8px;
-            border: 1.5px solid #e0e7ff;
-            font-size: 1.1rem;
-            background: #f7f7fa;
-            transition: border 0.2s, box-shadow 0.2s;
-            outline: none;
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        input:focus {
-            border: 1.5px solid #a78bfa;
-            background: #fff;
-            box-shadow: 0 2px 12px rgba(124,58,237,0.08);
+
+        .brand-logo {
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, #00f2fe, #7f00ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 8px rgba(0, 242, 254, 0.4));
         }
-        button {
-            background: linear-gradient(90deg, #a78bfa 0%, #7c3aed 100%);
-            color: #fff;
-            border: none;
-            padding: 14px 0;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 600;
+
+        .brand-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #ffffff 30%, #a259ff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .illustration-container {
             width: 100%;
-            cursor: pointer;
-            margin-top: 8px;
-            box-shadow: 0 2px 8px rgba(124, 58, 237, 0.10);
-            transition: background 0.2s, transform 0.2s;
+            max-width: 480px;
+            height: auto;
+            aspect-ratio: 1;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        button:hover {
-            background: linear-gradient(90deg, #7c3aed 0%, #06b6d4 100%);
-            transform: scale(1.03);
+
+        .hero-text {
+            max-width: 550px;
         }
-        .login-link {
-            margin-top: 18px;
-            font-size: 15px;
-            color: #6d28d9;
+
+        .hero-text h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            background: linear-gradient(to right, #ffffff, #cda7ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .login-link a {
-            color: #7c3aed;
-            text-decoration: underline;
+
+        .hero-text p {
+            font-size: 1.1rem;
+            color: #b0b3c6;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* RIGHT SIDE styling */
+        .right-side {
+            flex: 0.8;
+            background: rgba(4, 5, 25, 0.45);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-left: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+            position: relative;
+        }
+
+        .nav-links {
+            position: absolute;
+            top: 40px;
+            right: 60px;
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: #b0b3c6;
+            text-decoration: none;
+            font-size: 0.95rem;
             font-weight: 600;
-            transition: color 0.2s;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 1px solid transparent;
         }
-        .login-link a:hover {
-            color: #06b6d4;
+
+        .nav-links a:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .login-box h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .login-subtitle {
+            font-size: 0.95rem;
+            color: #8c8fa7;
+            margin-bottom: 32px;
+        }
+
+        .flash-message {
+            background: rgba(255, 75, 75, 0.15);
+            border: 1px solid rgba(255, 75, 75, 0.3);
+            color: #ff6b6b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin-bottom: 24px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 16px 20px 16px 54px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            font-family: inherit;
+            font-size: 1rem;
+            color: #ffffff;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #a259ff;
+            box-shadow: 0 0 20px rgba(162, 89, 255, 0.2);
+        }
+
+        .input-group input::placeholder {
+            color: #5c5f79;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus + .input-icon {
+            opacity: 1;
+            color: #a259ff;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, #7f00ff 0%, #e100ff 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 14px;
+            font-family: inherit;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(127, 0, 255, 0.3);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 26px rgba(127, 0, 255, 0.45);
+            background: linear-gradient(135deg, #8f1aff 0%, #eb1aff 100%);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .login-btn:hover .btn-arrow {
+            transform: translateX(4px);
+        }
+
+        .auth-footer {
+            margin-top: 28px;
+            text-align: center;
+            font-size: 0.95rem;
+            color: #8c8fa7;
+        }
+
+        .auth-footer a {
+            color: #a259ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+            color: #e100ff;
+        }
+
+        /* SVG Character Animation Keyframes */
+        .hair-sway {
+            transform-origin: 250px 200px;
+            animation: sway 4s ease-in-out infinite alternate;
+        }
+
+        .bun-bounce {
+            animation: bounce 2s ease-in-out infinite alternate;
+        }
+
+        .eyes-blink {
+            transform-origin: 250px 280px;
+            animation: blink 5s infinite;
+        }
+
+        .hand-left {
+            transform-origin: 195px 485px;
+            animation: type-left 0.15s ease-in-out infinite alternate;
+        }
+
+        .hand-right {
+            transform-origin: 305px 485px;
+            animation: type-right 0.18s ease-in-out infinite alternate;
+            animation-delay: 0.05s;
+        }
+
+        .laptop-glow {
+            animation: glow-pulse 3s infinite alternate;
+        }
+
+        /* Floating Math Symbols Keyframes */
+        .floating-symbols text {
+            transform-origin: center;
+        }
+
+        .float-sym-1 { animation: float-1 6s ease-in-out infinite; }
+        .float-sym-2 { animation: float-2 7s ease-in-out infinite; }
+        .float-sym-3 { animation: float-3 8s ease-in-out infinite; }
+        .float-sym-4 { animation: float-4 6.5s ease-in-out infinite; }
+        .float-sym-5 { animation: float-5 7.5s ease-in-out infinite; }
+        .float-sym-6 { animation: float-6 5s ease-in-out infinite; }
+        .float-sym-7 { animation: float-7 5.5s ease-in-out infinite; }
+
+        @keyframes sway {
+            0% { transform: rotate(-1.5deg); }
+            100% { transform: rotate(1.5deg); }
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-4px); }
+        }
+
+        @keyframes blink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+
+        @keyframes type-left {
+            0% { transform: translateY(0) translateX(0); }
+            100% { transform: translateY(-2px) translateX(1px); }
+        }
+
+        @keyframes type-right {
+            0% { transform: translateY(0) translateX(0); }
+            100% { transform: translateY(-2.5px) translateX(-1px); }
+        }
+
+        @keyframes glow-pulse {
+            0% { filter: drop-shadow(0 0 5px rgba(0, 242, 254, 0.4)); }
+            100% { filter: drop-shadow(0 0 15px rgba(0, 242, 254, 0.8)); }
+        }
+
+        @keyframes float-1 {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+        }
+        @keyframes float-2 {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(-5deg); }
+        }
+        @keyframes float-3 {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(4deg); }
+        }
+        @keyframes float-4 {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-18px) rotate(-3deg); }
+        }
+        @keyframes float-5 {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(6deg); }
+        }
+        @keyframes float-6 {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(-2deg); }
+        }
+        @keyframes float-7 {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-14px) rotate(4deg); }
+        }
+
+        /* Responsiveness */
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+                overflow-y: auto;
+            }
+            .left-side {
+                padding: 40px 30px;
+                flex: auto;
+                min-height: 50vh;
+                align-items: center;
+                text-align: center;
+            }
+            .illustration-container {
+                max-width: 320px;
+            }
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+            .right-side {
+                flex: auto;
+                min-height: 50vh;
+                padding: 40px 30px;
+                border-left: none;
+                border-top: 1px solid rgba(255, 255, 255, 0.06);
+            }
+            .nav-links {
+                top: 20px;
+                right: 30px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="register-container">
-        <h1>Register</h1>
-        <form method="POST" action="/register">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Create Account</button>
-        </form>
-        <div class="login-link">
-            Already have an account? <a href="/login">Login</a>
+    <!-- Background glowing gradients -->
+    <div class="glow-bg">
+        <div class="glow-sphere glow-1"></div>
+        <div class="glow-sphere glow-2"></div>
+    </div>
+    
+    <div class="container">
+        <!-- Left Side: Girl Math Solver Illustration & Hero Text -->
+        <div class="left-side">
+            <div class="brand">
+                <span class="brand-logo">📐</span>
+                <span class="brand-text">Math Solver AI</span>
+            </div>
+            
+            <div class="illustration-container">
+                <!-- SVG Girl Studying/Coding Math Animation -->
+                <svg viewBox="0 0 500 500" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="hair-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#4a1c40" />
+                            <stop offset="100%" stop-color="#2d0f28" />
+                        </linearGradient>
+                        <linearGradient id="skin-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#ffd5c6" />
+                            <stop offset="100%" stop-color="#ffbfa3" />
+                        </linearGradient>
+                        <linearGradient id="shirt-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#8a2387" />
+                            <stop offset="50%" stop-color="#e94057" />
+                            <stop offset="100%" stop-color="#f27121" />
+                        </linearGradient>
+                        <linearGradient id="laptop-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#1e1e38" />
+                            <stop offset="100%" stop-color="#0f0f1d" />
+                        </linearGradient>
+                        <linearGradient id="screen-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="rgba(0, 242, 254, 0.45)" />
+                            <stop offset="100%" stop-color="rgba(79, 172, 254, 0.05)" />
+                        </linearGradient>
+                        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur stdDeviation="8" result="blur" />
+                            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                        </filter>
+                    </defs>
+
+                    <!-- Background aura -->
+                    <circle cx="250" cy="300" r="160" fill="url(#screen-glow)" filter="url(#glow)" opacity="0.65"/>
+
+                    <!-- Character -->
+                    <g class="girl-character">
+                        <!-- Back Hair -->
+                        <path d="M160,250 C120,290 120,380 155,420 C165,370 160,320 165,250 Z" fill="#2d0f28" />
+                        
+                        <!-- Body/Shoulders -->
+                        <path d="M180,410 C140,430 115,475 115,510 L385,510 C385,475 360,430 320,410 C290,430 210,430 180,410 Z" fill="url(#shirt-grad)" />
+                        
+                        <!-- Collar/Neck -->
+                        <path d="M225,380 L275,380 L260,415 L240,415 Z" fill="#ffbfa3" />
+                        <path d="M235,330 L265,330 L265,390 L235,390 Z" fill="url(#skin-grad)" />
+
+                        <!-- Head -->
+                        <circle cx="250" cy="290" r="55" fill="url(#skin-grad)" />
+
+                        <!-- Ears -->
+                        <circle cx="192" cy="290" r="9" fill="#ffbfa3" />
+                        <circle cx="308" cy="290" r="9" fill="#ffbfa3" />
+
+                        <!-- Hair Front/Sides -->
+                        <g class="hair-sway">
+                            <!-- Bun -->
+                            <circle cx="250" cy="180" r="26" fill="url(#hair-grad)" class="bun-bounce" />
+                            <!-- Bangs -->
+                            <path d="M192,260 C192,205 308,205 308,260 C308,260 290,240 250,245 C210,240 192,260 192,260 Z" fill="url(#hair-grad)" />
+                            <!-- Side locks -->
+                            <path d="M192,250 C178,280 182,340 192,360 C197,320 197,280 197,250 Z" fill="url(#hair-grad)" />
+                            <path d="M308,250 C322,280 318,340 308,360 C303,320 303,280 303,250 Z" fill="url(#hair-grad)" />
+                        </g>
+
+                        <!-- Eyes (Blinking) -->
+                        <g class="eyes-blink">
+                            <!-- Left Eye -->
+                            <ellipse cx="225" cy="290" rx="5.5" ry="5.5" fill="#1e1e2f" />
+                            <circle cx="223" cy="288" r="1.8" fill="#ffffff" />
+                            <!-- Right Eye -->
+                            <ellipse cx="275" cy="290" rx="5.5" ry="5.5" fill="#1e1e2f" />
+                            <circle cx="273" cy="288" r="1.8" fill="#ffffff" />
+                        </g>
+                        
+                        <!-- Cheeks (Blush) -->
+                        <ellipse cx="212" cy="305" rx="7" ry="3.5" fill="#ff758c" opacity="0.45" />
+                        <ellipse cx="288" cy="305" rx="7" ry="3.5" fill="#ff758c" opacity="0.45" />
+
+                        <!-- Eyebrows -->
+                        <path d="M216,280 C220,277 228,278 233,282" stroke="#2d0f28" stroke-width="2" fill="none" stroke-linecap="round" />
+                        <path d="M284,280 C280,277 272,278 267,282" stroke="#2d0f28" stroke-width="2" fill="none" stroke-linecap="round" />
+
+                        <!-- Mouth -->
+                        <path d="M243,313 C243,313 250,319 257,313" stroke="#1e1e2f" stroke-width="2.5" fill="none" stroke-linecap="round" />
+
+                        <!-- Glasses -->
+                        <g class="glasses">
+                            <circle cx="225" cy="290" r="17" stroke="#ff7eb3" stroke-width="2.5" fill="none" />
+                            <circle cx="275" cy="290" r="17" stroke="#ff7eb3" stroke-width="2.5" fill="none" />
+                            <line x1="242" y1="290" x2="258" y2="290" stroke="#ff7eb3" stroke-width="2.5" />
+                        </g>
+
+                        <!-- Laptop -->
+                        <g class="laptop-glow">
+                            <!-- Base -->
+                            <path d="M190,475 L310,475 L335,505 L165,505 Z" fill="url(#laptop-grad)" />
+                            <!-- Screen -->
+                            <path d="M200,475 L300,475 L292,405 L208,405 Z" fill="#0f0f1d" />
+                            <path d="M204,470 L296,470 L289,410 L211,410 Z" fill="url(#screen-glow)" />
+                            <!-- Screen lines -->
+                            <line x1="220" y1="420" x2="255" y2="420" stroke="#00f2fe" stroke-width="2.5" opacity="0.8" />
+                            <line x1="220" y1="430" x2="275" y2="430" stroke="#4facfe" stroke-width="2.5" opacity="0.8" />
+                            <line x1="220" y1="440" x2="245" y2="440" stroke="#f35588" stroke-width="2.5" opacity="0.8" />
+                            <line x1="220" y1="450" x2="265" y2="450" stroke="#38ef7d" stroke-width="2.5" opacity="0.8" />
+                        </g>
+
+                        <!-- Hands typing (Animated) -->
+                        <g class="hands">
+                            <circle cx="198" cy="480" r="8" fill="#ffd5c6" class="hand-left" />
+                            <circle cx="302" cy="480" r="8" fill="#ffd5c6" class="hand-right" />
+                        </g>
+                    </g>
+
+                    <!-- Floating Math Symbols -->
+                    <g class="floating-symbols">
+                        <text x="60" y="150" font-family="'Outfit', sans-serif" font-weight="bold" font-size="26" fill="#4facfe" opacity="0.8" class="float-sym-1">f(x)</text>
+                        <text x="400" y="170" font-family="'Outfit', sans-serif" font-weight="bold" font-size="34" fill="#f35588" opacity="0.75" class="float-sym-2">√x</text>
+                        <text x="80" y="340" font-family="'Outfit', sans-serif" font-weight="bold" font-size="30" fill="#38ef7d" opacity="0.7" class="float-sym-3">π</text>
+                        <text x="390" y="360" font-family="'Outfit', sans-serif" font-weight="bold" font-size="28" fill="#ff9a9e" opacity="0.8" class="float-sym-4">∑</text>
+                        <text x="250" y="100" font-family="'Outfit', sans-serif" font-weight="bold" font-size="22" fill="#a259ff" opacity="0.85" class="float-sym-5">∫</text>
+                        <text x="110" y="90" font-family="'Outfit', sans-serif" font-weight="bold" font-size="18" fill="#00f2fe" opacity="0.6" class="float-sym-6">+</text>
+                        <text x="350" y="90" font-family="'Outfit', sans-serif" font-weight="bold" font-size="20" fill="#f27121" opacity="0.6" class="float-sym-7">=</text>
+                    </g>
+                </svg>
+            </div>
+            
+            <div class="hero-text">
+                <h1>Solve Any Math Problem Instantly</h1>
+                <p>Unlock step-by-step solutions with AI-powered tutoring and advanced parsing engines.</p>
+            </div>
+        </div>
+        
+        <!-- Right Side: Sleek Glassmorphism Register Form -->
+        <div class="right-side">
+            <div class="nav-links">
+                <a href="{{ url_for('faq_page') }}">FAQ</a>
+            </div>
+            
+            <div class="login-box">
+                <h2>Create Account</h2>
+                <p class="login-subtitle">Join us to explore step-by-step math solver</p>
+                
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    <div class="flash-message">
+                      <span>⚠️</span>
+                      <div>
+                        {% for message in messages %}
+                          {{ message }}
+                        {% endfor %}
+                      </div>
+                    </div>
+                  {% endif %}
+                {% endwith %}
+                
+                <form method="POST" action="{{ url_for('register') }}">
+                    <div class="input-group">
+                        <input type="text" name="username" placeholder="Username" required autocomplete="off">
+                        <span class="input-icon">👤</span>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" name="email" placeholder="Email Address" required autocomplete="off">
+                        <span class="input-icon">✉️</span>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" name="password" placeholder="Password" required>
+                        <span class="input-icon">🔒</span>
+                    </div>
+                    <button type="submit" class="login-btn">
+                        <span>Sign Up</span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </form>
+                
+                <div class="auth-footer">
+                    Already have an account? <a href="{{ url_for('login') }}">Login</a>
+                </div>
+            </div>
         </div>
     </div>
 </body>

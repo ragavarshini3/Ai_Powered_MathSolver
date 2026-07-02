@@ -1,84 +1,315 @@
-<!-- filepath: templates/review.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Review - Math Solver AI</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #0f172a;
-            font-family: Arial, sans-serif;
-            color: white;
+            background-color: #03001e;
+            font-family: 'Outfit', sans-serif;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Glowing mesh background spheres */
+        .glow-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .glow-sphere {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.2;
+            animation: float-slow 20s infinite alternate;
+        }
+
+        .glow-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #7f00ff 0%, #e100ff 100%);
+            top: -100px;
+            left: -100px;
+        }
+
+        .glow-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #00f2fe 0%, #4facfe 100%);
+            bottom: -150px;
+            right: 20%;
+            animation-delay: -5s;
+        }
+
+        @keyframes float-slow {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(80px, 50px) scale(1.1);
+            }
+        }
+
+        /* Enhanced Navigation */
+        .nav-container {
+            background: rgba(4, 5, 25, 0.5);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            height: 100vh;
+            padding: 15px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .nav-brand i {
+            font-size: 1.5rem;
+            color: #00f2fe;
+            filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.6));
+        }
+
+        .brand-text {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #ffffff 30%, #a259ff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            color: #b0b3c6;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 10px rgba(162, 89, 255, 0.1);
+        }
+
+        /* Main Container */
+        .container {
+            width: 90%;
+            max-width: 500px;
+            margin: 60px auto;
+            position: relative;
+            z-index: 1;
         }
 
         .review-container {
-            background: #1e293b;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-            width: 400px;
+            background: rgba(4, 5, 25, 0.45);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
 
         h2 {
             text-align: center;
-            color: #38bdf8;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #ffffff, #cda7ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         form {
             display: flex;
             flex-direction: column;
+            gap: 16px;
         }
 
         input, textarea, select {
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 8px;
-            border: none;
-            font-size: 16px;
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            color: #fff;
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: #a259ff;
+            box-shadow: 0 0 20px rgba(162, 89, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #5c5f79;
         }
 
         textarea {
             resize: none;
-            height: 100px;
+            height: 120px;
+        }
+
+        label {
+            font-size: 0.95rem;
+            color: #b0b3c6;
+            font-weight: 500;
+            margin-bottom: -6px;
+        }
+
+        select option {
+            background: #03001e;
+            color: #fff;
         }
 
         button {
-            padding: 10px;
-            background-color: #38bdf8;
-            color: white;
+            width: 100%;
+            padding: 14px 20px;
+            background: linear-gradient(135deg, #7f00ff 0%, #e100ff 100%);
+            color: #ffffff;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 700;
             cursor: pointer;
-            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(127, 0, 255, 0.25);
             margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
         }
 
         button:hover {
-            background-color: #0ea5e9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 22px rgba(127, 0, 255, 0.4);
+            background: linear-gradient(135deg, #8f1aff 0%, #eb1aff 100%);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+
+            .review-container {
+                padding: 30px 20px;
+            }
+
+            .nav-content {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="review-container">
-        <h2>Submit Your Review</h2>
-        <form action="/submit_review" method="POST">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <textarea name="comment" placeholder="Write your review here..." required></textarea>
-            <label for="rating">Rating:</label>
-            <select name="rating" required>
-                <option value="">Select stars</option>
-                <option value="⭐">⭐</option>
-                <option value="⭐⭐">⭐⭐</option>
-                <option value="⭐⭐⭐">⭐⭐⭐</option>
-                <option value="⭐⭐⭐⭐">⭐⭐⭐⭐</option>
-                <option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐</option>
-            </select>
-            <button type="submit">Submit Review</button>
-        </form>
+    <!-- Glowing background spheres -->
+    <div class="glow-bg">
+        <div class="glow-sphere glow-1"></div>
+        <div class="glow-sphere glow-2"></div>
+    </div>
+
+    <!-- Enhanced Navigation -->
+    <div class="nav-container">
+        <div class="nav-content">
+            <a href="{{ url_for('solve') }}" class="nav-brand">
+                <i class="fas fa-calculator"></i>
+                <span class="brand-text">Math Solver AI</span>
+            </a>
+            <div class="nav-links">
+                <a href="{{ url_for('solve') }}"><i class="fas fa-home"></i> Home</a>
+                <a href="{{ url_for('faq_page') }}"><i class="fas fa-question-circle"></i> FAQ</a>
+                <a href="{{ url_for('about_page') }}"><i class="fas fa-info-circle"></i> About</a>
+                <a href="{{ url_for('show_reviews') }}" class="active"><i class="fas fa-star"></i> Reviews</a>
+                <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="review-container">
+            <h2>Submit Your Review</h2>
+            <form action="/submit_review" method="POST">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <textarea name="comment" placeholder="Write your review here..." required></textarea>
+                <label for="rating">Rating:</label>
+                <select name="rating" id="rating" required>
+                    <option value="">Select stars</option>
+                    <option value="⭐">⭐</option>
+                    <option value="⭐⭐">⭐⭐</option>
+                    <option value="⭐⭐⭐">⭐⭐⭐</option>
+                    <option value="⭐⭐⭐⭐">⭐⭐⭐⭐</option>
+                    <option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐</option>
+                </select>
+                <button type="submit"><i class="fas fa-paper-plane"></i> Submit Review</button>
+            </form>
+        </div>
     </div>
 </body>
 </html>

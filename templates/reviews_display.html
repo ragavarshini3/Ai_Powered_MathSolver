@@ -1,54 +1,344 @@
-<!-- filepath: templates/reviews_display.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Reviews - Math Solver AI</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #f5f5f5;
-            font-family: sans-serif;
-            padding: 40px;
+            background-color: #03001e;
+            font-family: 'Outfit', sans-serif;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        h1 {
-            text-align: center;
-            color: #333;
+        /* Glowing mesh background spheres */
+        .glow-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
         }
 
+        .glow-sphere {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.2;
+            animation: float-slow 20s infinite alternate;
+        }
+
+        .glow-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #7f00ff 0%, #e100ff 100%);
+            top: -100px;
+            left: -100px;
+        }
+
+        .glow-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #00f2fe 0%, #4facfe 100%);
+            bottom: -150px;
+            right: 20%;
+            animation-delay: -5s;
+        }
+
+        @keyframes float-slow {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(80px, 50px) scale(1.1);
+            }
+        }
+
+        /* Enhanced Navigation */
+        .nav-container {
+            background: rgba(4, 5, 25, 0.5);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .nav-brand i {
+            font-size: 1.5rem;
+            color: #00f2fe;
+            filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.6));
+        }
+
+        .brand-text {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #ffffff 30%, #a259ff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            color: #b0b3c6;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 10px rgba(162, 89, 255, 0.1);
+        }
+
+        /* Main Container */
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 60px auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-box {
+            background: rgba(4, 5, 25, 0.45);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .main-box h1 {
+            color: #fff;
+            font-size: 2.2em;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #ffffff, #cda7ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .write-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #7f00ff 0%, #e100ff 100%);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(127, 0, 255, 0.25);
+        }
+
+        .write-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 22px rgba(127, 0, 255, 0.4);
+            background: linear-gradient(135deg, #8f1aff 0%, #eb1aff 100%);
+        }
+
+        /* Review Item Styling */
         .review {
-            background-color: #ffffff;
-            padding: 20px;
-            margin: 20px auto;
-            border-left: 5px solid #00bcd4;
-            border-radius: 10px;
-            max-width: 600px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-left: 4px solid #00f2fe;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .review:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+            border-left-color: #a259ff;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
         }
 
         .review h3 {
-            margin: 0;
-            color: #00bcd4;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
         }
 
-        .review p {
-            margin: 10px 0;
+        .rating {
+            font-size: 1.1rem;
+            color: #ffb800;
+            margin-bottom: 12px;
         }
 
-        .review .rating {
-            font-size: 20px;
-            color: gold;
+        .comment {
+            font-size: 1rem;
+            color: #b0b3c6;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #b0b3c6;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.1);
+            margin-bottom: 16px;
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+            font-weight: 300;
+            margin-bottom: 24px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-box {
+                padding: 35px 20px;
+            }
+
+            .header-row {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .header-row h1 {
+                font-size: 1.8rem;
+            }
+
+            .write-btn {
+                justify-content: center;
+            }
+
+            .nav-content {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>User Reviews</h1>
-    {% for review in reviews %}
-        <div class="review">
-            <h3>{{ review.name }}</h3>
-            <p class="rating">{{ review.rating }}</p>
-            <p>{{ review.comment }}</p>
+    <!-- Glowing background spheres -->
+    <div class="glow-bg">
+        <div class="glow-sphere glow-1"></div>
+        <div class="glow-sphere glow-2"></div>
+    </div>
+
+    <!-- Enhanced Navigation -->
+    <div class="nav-container">
+        <div class="nav-content">
+            <a href="{{ url_for('solve') }}" class="nav-brand">
+                <i class="fas fa-calculator"></i>
+                <span class="brand-text">Math Solver AI</span>
+            </a>
+            <div class="nav-links">
+                <a href="{{ url_for('solve') }}"><i class="fas fa-home"></i> Home</a>
+                <a href="{{ url_for('faq_page') }}"><i class="fas fa-question-circle"></i> FAQ</a>
+                <a href="{{ url_for('about_page') }}"><i class="fas fa-info-circle"></i> About</a>
+                <a href="{{ url_for('show_reviews') }}" class="active"><i class="fas fa-star"></i> Reviews</a>
+                <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
         </div>
-    {% endfor %}
+    </div>
+
+    <div class="container">
+        <div class="main-box">
+            <div class="header-row">
+                <h1>User Reviews</h1>
+                <a href="{{ url_for('review') }}" class="write-btn">
+                    <i class="fas fa-pen"></i> Write a Review
+                </a>
+            </div>
+
+            {% if reviews %}
+                {% for review in reviews %}
+                    <div class="review">
+                        <h3>{{ review.name }}</h3>
+                        <div class="rating">{{ review.rating }}</div>
+                        <div class="comment">{{ review.comment }}</div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <i class="fas fa-comments"></i>
+                    <p>No reviews submitted yet. Be the first to share your feedback!</p>
+                    <a href="{{ url_for('review') }}" class="write-btn">
+                        <i class="fas fa-pen"></i> Submit First Review
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 </body>
 </html>

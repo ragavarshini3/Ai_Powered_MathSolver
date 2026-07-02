@@ -1,28 +1,285 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ - Math Solver AI</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #03001e;
+            font-family: 'Outfit', sans-serif;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Glowing mesh background spheres */
+        .glow-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .glow-sphere {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.2;
+            animation: float-slow 20s infinite alternate;
+        }
+
+        .glow-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #7f00ff 0%, #e100ff 100%);
+            top: -100px;
+            left: -100px;
+        }
+
+        .glow-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #00f2fe 0%, #4facfe 100%);
+            bottom: -150px;
+            right: 20%;
+            animation-delay: -5s;
+        }
+
+        @keyframes float-slow {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(80px, 50px) scale(1.1);
+            }
+        }
+
+        /* Enhanced Navigation */
+        .nav-container {
+            background: rgba(4, 5, 25, 0.5);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .nav-brand i {
+            font-size: 1.5rem;
+            color: #00f2fe;
+            filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.6));
+        }
+
+        .brand-text {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #ffffff 30%, #a259ff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            color: #b0b3c6;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 10px rgba(162, 89, 255, 0.1);
+        }
+
+        /* Main Container */
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 60px auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-box {
+            background: rgba(4, 5, 25, 0.45);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .main-box h1 {
+            color: #fff;
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: 800;
+            margin-bottom: 40px;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #ffffff, #cda7ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* FAQ Item Styling */
+        .faq-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: #a259ff;
+            box-shadow: 0 10px 25px rgba(162, 89, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .faq-item h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #00f2fe;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .faq-item h3 i {
+            filter: drop-shadow(0 0 5px rgba(0, 242, 254, 0.5));
+        }
+
+        .faq-item p {
+            font-size: 1rem;
+            color: #b0b3c6;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-box {
+                padding: 30px 20px;
+            }
+
+            .main-box h1 {
+                font-size: 2rem;
+                margin-bottom: 30px;
+            }
+
+            .nav-content {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="top-bar">
-        <div class="logo">Math Solver AI</div>
-        <div class="nav-links" style="float:right;">
-            <a href="{{ url_for('solve') }}">Home</a>
-            <a href="{{ url_for('faq_page') }}">FAQ</a>
-            <a href="{{ url_for('logout') }}">Logout</a>
+    <!-- Glowing background spheres -->
+    <div class="glow-bg">
+        <div class="glow-sphere glow-1"></div>
+        <div class="glow-sphere glow-2"></div>
+    </div>
+
+    <!-- Enhanced Navigation -->
+    <div class="nav-container">
+        <div class="nav-content">
+            <a href="{{ url_for('solve') }}" class="nav-brand">
+                <i class="fas fa-calculator"></i>
+                <span class="brand-text">Math Solver AI</span>
+            </a>
+            <div class="nav-links">
+                <a href="{{ url_for('solve') }}"><i class="fas fa-home"></i> Home</a>
+                <a href="{{ url_for('faq_page') }}" class="active"><i class="fas fa-question-circle"></i> FAQ</a>
+                <a href="{{ url_for('about_page') }}"><i class="fas fa-info-circle"></i> About</a>
+                <a href="{{ url_for('show_reviews') }}"><i class="fas fa-star"></i> Reviews</a>
+                <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
         </div>
     </div>
-    <div class="main-box">
-        <h1>Frequently Asked Questions</h1>
-        <h3>What types of math problems can I solve?</h3>
-        <p>You can solve algebra, calculus (differentiation/integration), and basic word problems (area, perimeter, etc.).</p>
-        <h3>How do I use the image upload?</h3>
-        <p>Upload a clear image of your math problem. The app will try to extract and solve it.</p>
-        <h3>Why do some word problems not work?</h3>
-        <p>The app supports common patterns (area, perimeter, etc.). For complex word problems, try to rephrase or use mathematical expressions.</p>
-        <h3>How do I log out?</h3>
-        <p>Click the "Logout" link in the top bar.</p>
+
+    <div class="container">
+        <div class="main-box">
+            <h1>Frequently Asked Questions</h1>
+            
+            <div class="faq-item">
+                <h3><i class="fas fa-question-circle"></i> What types of math problems can I solve?</h3>
+                <p>You can solve algebra, calculus (differentiation/integration), and basic word problems (area, perimeter, etc.). When API Mode is enabled, the advanced Gemini 2.5 Flash model handles complex arithmetic, geometry, trigonometry, modular arithmetic, probability, and multi-step word problems seamlessly.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3><i class="fas fa-camera"></i> How do I use the image upload?</h3>
+                <p>Click on the upload card, select a clear image containing your math problem (in format PNG, JPG, JPEG, BMP), and click "Solve Problem". The application will automatically perform OCR extraction and process the question.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3><i class="fas fa-exclamation-triangle"></i> Why do some word problems not work?</h3>
+                <p>If you're running in fallback mode (without Gemini API key configured), the local solver relies on strict pattern-matching formulas. We highly recommend configuring the <code>GEMINI_API_KEY</code> inside a local <code>.env</code> file for advanced mathematical reasoning capabilities.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3><i class="fas fa-sign-out-alt"></i> How do I log out?</h3>
+                <p>You can log out by clicking the "Logout" link in the top navigation bar at any time to clear your active session.</p>
+            </div>
+        </div>
     </div>
 </body>
 </html>

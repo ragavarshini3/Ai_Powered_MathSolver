@@ -1,57 +1,314 @@
-<!-- templates/about.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - Math Solver AI</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background-image: url("/static/images/math_bg.jpg");
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            font-family: Arial, sans-serif;
-            color: white;
-            padding: 50px;
+            background-color: #03001e;
+            font-family: 'Outfit', sans-serif;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        .container {
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 30px;
-            border-radius: 12px;
-            max-width: 700px;
-            margin: auto;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        /* Glowing mesh background spheres */
+        .glow-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
         }
 
-        h1 {
-            text-align: center;
-            color: #00ffff;
+        .glow-sphere {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.2;
+            animation: float-slow 20s infinite alternate;
         }
 
-        a {
-            display: inline-block;
-            margin: 10px 10px 0 0;
-            padding: 10px 15px;
-            background-color: #00bcd4;
-            color: white;
+        .glow-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #7f00ff 0%, #e100ff 100%);
+            top: -100px;
+            left: -100px;
+        }
+
+        .glow-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #00f2fe 0%, #4facfe 100%);
+            bottom: -150px;
+            right: 20%;
+            animation-delay: -5s;
+        }
+
+        @keyframes float-slow {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(80px, 50px) scale(1.1);
+            }
+        }
+
+        /* Enhanced Navigation */
+        .nav-container {
+            background: rgba(4, 5, 25, 0.5);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             text-decoration: none;
-            border-radius: 8px;
         }
 
-        a:hover {
-            background-color: #0097a7;
+        .nav-brand i {
+            font-size: 1.5rem;
+            color: #00f2fe;
+            filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.6));
+        }
+
+        .brand-text {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #ffffff 30%, #a259ff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            color: #b0b3c6;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 10px rgba(162, 89, 255, 0.1);
+        }
+
+        /* Main Container */
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 60px auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-box {
+            background: rgba(4, 5, 25, 0.45);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .main-box h1 {
+            color: #fff;
+            font-size: 2.5em;
+            font-weight: 800;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #ffffff, #cda7ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .main-box p {
+            font-size: 1.15rem;
+            color: #b0b3c6;
+            line-height: 1.8;
+            font-weight: 300;
+            margin-bottom: 40px;
+            text-align: justify;
+        }
+
+        /* Action Buttons Grid */
+        .actions-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #7f00ff 0%, #e100ff 100%);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(127, 0, 255, 0.25);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 22px rgba(127, 0, 255, 0.4);
+            background: linear-gradient(135deg, #8f1aff 0%, #eb1aff 100%);
+        }
+
+        .action-btn.secondary {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.25);
+        }
+
+        .action-btn.secondary:hover {
+            background: linear-gradient(135deg, #00d9f4 0%, #3ca0fe 100%);
+            box-shadow: 0 6px 22px rgba(0, 242, 254, 0.4);
+        }
+
+        .action-btn.outline {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: none;
+        }
+
+        .action-btn.outline:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #a259ff;
+            box-shadow: 0 0 15px rgba(162, 89, 255, 0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-box {
+                padding: 30px 20px;
+            }
+
+            .main-box h1 {
+                font-size: 2rem;
+            }
+
+            .nav-content {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .actions-grid {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .action-btn {
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Glowing background spheres -->
+    <div class="glow-bg">
+        <div class="glow-sphere glow-1"></div>
+        <div class="glow-sphere glow-2"></div>
+    </div>
+
+    <!-- Enhanced Navigation -->
+    <div class="nav-container">
+        <div class="nav-content">
+            <a href="{{ url_for('solve') }}" class="nav-brand">
+                <i class="fas fa-calculator"></i>
+                <span class="brand-text">Math Solver AI</span>
+            </a>
+            <div class="nav-links">
+                <a href="{{ url_for('solve') }}"><i class="fas fa-home"></i> Home</a>
+                <a href="{{ url_for('faq_page') }}"><i class="fas fa-question-circle"></i> FAQ</a>
+                <a href="{{ url_for('about_page') }}" class="active"><i class="fas fa-info-circle"></i> About</a>
+                <a href="{{ url_for('show_reviews') }}"><i class="fas fa-star"></i> Reviews</a>
+                <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
-        <h1>About Math Solver AI</h1>
-        <p>This AI-powered web application helps you solve various mathematical problems including arithmetic, algebra, calculus, and word problems. It offers step-by-step explanations, OCR-based image solving, and even lets you generate PDF solutions for your records.</p>
-        
-        <!-- Links to review and reviews page -->
-        <a href="{{ url_for('review') }}">✍ Submit a Review</a>
-        <a href="{{ url_for('show_reviews') }}">📖 View Reviews</a>
-        <a href="{{ url_for('index') }}">🔙 Go to Solver</a>
+        <div class="main-box">
+            <h1>About Math Solver AI</h1>
+            <p>
+                Math Solver AI is a state-of-the-art interactive platform designed to help students, educators, and lifelong learners tackle complex mathematical challenges. Leveraging the advanced reasoning capabilities of Gemini 2.5 Flash, our solver provides instant, step-by-step solutions with detailed pedagogy, making self-learning accessible and intuitive.
+            </p>
+            <p>
+                Whether you need to solve system equations, differentiate a function, prove trigonometric identities, compute statistics, or evaluate word problems, Math Solver AI gives you the tools you need. With OCR image recognition, you can snap a photo of any handwritten or printed problem, and watch the solver construct clean formulas and detailed explanations in seconds.
+            </p>
+            
+            <div class="actions-grid">
+                <a href="{{ url_for('solve') }}" class="action-btn">
+                    <i class="fas fa-calculator"></i> Go to Solver
+                </a>
+                <a href="{{ url_for('review') }}" class="action-btn secondary">
+                    <i class="fas fa-pen"></i> Submit a Review
+                </a>
+                <a href="{{ url_for('show_reviews') }}" class="action-btn outline">
+                    <i class="fas fa-comment-dots"></i> View Reviews
+                </a>
+            </div>
+        </div>
     </div>
 </body>
 </html>

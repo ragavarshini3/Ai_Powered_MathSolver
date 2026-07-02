@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: math-solver-ai
+    runtime: docker
+    plan: free
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false # Set this in the Render dashboard or during deployment
+      - key: PORT
+        value: 10000

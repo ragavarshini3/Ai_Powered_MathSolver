@@ -1,0 +1,12 @@
+{
+    "python.defaultInterpreterPath": "c:\\Users\\Varsh\\OneDrive\\Desktop\\maths_solver_ai_current\\venv\\Scripts\\python.exe",
+    "python.interpreterPath": "c:\\Users\\Varsh\\OneDrive\\Desktop\\maths_solver_ai_current\\venv\\Scripts\\python.exe",
+    "python.analysis.extraPaths": [
+        "c:\\Users\\Varsh\\OneDrive\\Desktop\\maths_solver_ai_current\\venv\\Lib\\site-packages"
+    ],
+    "python.linting.enabled": true,
+    "python.terminal.activateEnvironment": true,
+    "python.analysis.typeCheckingMode": "basic",
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "git.ignoreLimitWarning": true
+}

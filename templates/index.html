@@ -7,6 +7,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
         * {
             margin: 0;
             padding: 0;
@@ -14,181 +16,448 @@
         }
 
         body {
-            background: linear-gradient(135deg, #00030dff 0%, rgb(123, 168, 213) 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #03001e;
+            font-family: 'Outfit', sans-serif;
+            color: #ffffff;
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Glowing mesh background spheres */
+        .glow-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .glow-sphere {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.2;
+            animation: float-slow 20s infinite alternate;
+        }
+
+        .glow-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #7f00ff 0%, #e100ff 100%);
+            top: -100px;
+            left: -100px;
+        }
+
+        .glow-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #00f2fe 0%, #4facfe 100%);
+            bottom: -150px;
+            right: 20%;
+            animation-delay: -5s;
+        }
+
+        @keyframes float-slow {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(80px, 50px) scale(1.1);
+            }
         }
 
         /* Enhanced Navigation */
         .nav-container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(4, 5, 25, 0.5);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .nav-brand i {
+            font-size: 1.5rem;
+            color: #00f2fe;
+            filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.6));
+        }
+
+        .brand-text {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #ffffff 30%, #a259ff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .nav-links {
             display: flex;
-            justify-content: flex-end;
             align-items: center;
-            padding: 15px 30px;
-            gap: 25px;
+            gap: 15px;
         }
 
         .nav-links a {
-            color: #fff;
+            color: #b0b3c6;
             text-decoration: none;
-            font-size: 1.1em;
+            font-size: 0.95rem;
             font-weight: 600;
             padding: 8px 16px;
             border-radius: 20px;
             transition: all 0.3s ease;
-            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .nav-links a:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        .nav-links a:hover, .nav-links a.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 10px rgba(162, 89, 255, 0.1);
         }
 
         /* Enhanced App Title */
         .app-name {
             text-align: center;
-            font-size: 3.5em;
-            font-weight: bold;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
-            background-size: 400% 400%;
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00f2fe 30%, #a259ff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin: 40px 0;
-            animation: gradientShift 4s ease-in-out infinite;
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+            margin: 40px 0 20px;
+            filter: drop-shadow(0 2px 10px rgba(162, 89, 255, 0.2));
         }
 
         /* Enhanced Main Container */
         .main-box {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 25px;
+            background: rgba(4, 5, 25, 0.45);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
             width: 90%;
             max-width: 800px;
             margin: 0 auto 40px;
             padding: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
         }
 
         .main-box h1 {
             color: #fff;
             text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 15px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            font-size: 2.2em;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #ffffff, #cda7ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .main-box p {
-            color: rgba(255, 255, 255, 0.9);
+            color: #b0b3c6;
             text-align: center;
-            font-size: 1.2em;
+            font-size: 1.05em;
+            font-weight: 300;
             margin-bottom: 30px;
         }
 
         /* Enhanced Input Area */
         .input-area {
-            margin: 30px 0;
+            margin: 30px 0 10px;
         }
 
-        .example-dropdown {
+        /* Custom Stylish Dropdown Container */
+        .custom-dropdown-container {
+            position: relative;
             width: 100%;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            background: rgba(255, 255, 255, 0.15);
-            color: #fff;
-            font-size: 1.1em;
+            margin-bottom: 25px;
+            user-select: none;
+        }
+
+        .custom-dropdown-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.04);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #b0b3c6;
+            font-size: 1rem;
             backdrop-filter: blur(10px);
+        }
+
+        .custom-dropdown-trigger:hover {
+            border-color: #a259ff;
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 20px rgba(162, 89, 255, 0.15);
+            color: #ffffff;
+        }
+
+        .custom-dropdown-trigger.active {
+            border-color: #a259ff;
+            background: rgba(4, 5, 25, 0.6);
+            box-shadow: 0 0 25px rgba(162, 89, 255, 0.25);
+            color: #ffffff;
+        }
+
+        .custom-dropdown-trigger .trigger-icon {
+            color: #00f2fe;
+            margin-right: 12px;
+            font-size: 1.1rem;
+            filter: drop-shadow(0 0 4px rgba(0, 242, 254, 0.4));
+        }
+
+        .custom-dropdown-trigger .arrow-icon {
+            font-size: 0.9rem;
+            transition: transform 0.3s ease;
+        }
+
+        .custom-dropdown-trigger.active .arrow-icon {
+            transform: rotate(180deg);
+        }
+
+        #selected-option-label {
+            flex-grow: 1;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        /* Custom Dropdown Menu */
+        .custom-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            width: 100%;
+            background: rgba(4, 5, 25, 0.95);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(162, 89, 255, 0.1);
+            max-height: 400px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .custom-dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* Dropdown Search Wrapper */
+        .dropdown-search-wrapper {
+            position: sticky;
+            top: 0;
+            background: rgba(4, 5, 25, 0.95);
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .dropdown-search-wrapper .search-icon {
+            position: absolute;
+            left: 28px;
+            color: #8c8fa7;
+            font-size: 0.95rem;
+        }
+
+        #dropdown-search {
+            width: 100%;
+            padding: 10px 15px 10px 38px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+            font-family: inherit;
             transition: all 0.3s ease;
         }
 
-        .example-dropdown:focus {
-            outline: none;
-            border-color: #4ecdc4;
-            box-shadow: 0 0 20px rgba(78, 205, 196, 0.4);
+        #dropdown-search:focus {
+            border-color: #00f2fe;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.25);
         }
 
-        .example-dropdown option {
-            background: #333;
+        /* Dropdown Categories & Items */
+        .dropdown-categories {
+            padding: 10px;
+        }
+
+        .category-section {
+            margin-bottom: 15px;
+        }
+
+        .category-section:last-child {
+            margin-bottom: 5px;
+        }
+
+        .category-header {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #a259ff;
+            font-weight: 700;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px dashed rgba(162, 89, 255, 0.15);
+            margin-bottom: 8px;
+        }
+
+        .category-items {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .dropdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: transparent;
+            border-left: 3px solid transparent;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-left-color: #00f2fe;
+            transform: translateX(4px);
+        }
+
+        .dropdown-item .item-name {
+            font-weight: 600;
+            font-size: 0.95rem;
             color: #fff;
+        }
+
+        .dropdown-item .item-code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #00f2fe;
+            background: rgba(0, 242, 254, 0.08);
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 242, 254, 0.15);
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-item:hover .item-code {
+            background: rgba(0, 242, 254, 0.15);
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
         }
 
         .math-input {
             width: 100%;
-            min-height: 120px;
+            min-height: 140px;
             padding: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.04);
             color: #fff;
-            font-size: 1.2em;
+            font-size: 1.1rem;
             font-family: 'Courier New', monospace;
             resize: vertical;
-            backdrop-filter: blur(10px);
+            outline: none;
             transition: all 0.3s ease;
         }
 
         .math-input:focus {
-            outline: none;
-            border-color: #4ecdc4;
-            box-shadow: 0 0 20px rgba(78, 205, 196, 0.4);
-            background: rgba(255, 255, 255, 0.25);
+            border-color: #a259ff;
+            box-shadow: 0 0 20px rgba(162, 89, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .math-input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
+            color: #5c5f79;
         }
 
         /* Enhanced Solve Button */
         .solve-button {
             width: 100%;
-            padding: 18px;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            color: #fff;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, #7f00ff 0%, #e100ff 100%);
+            color: #ffffff;
             border: none;
-            border-radius: 15px;
-            font-size: 1.3em;
-            font-weight: bold;
+            border-radius: 14px;
+            font-family: inherit;
+            font-size: 1.1rem;
+            font-weight: 700;
             cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
             transition: all 0.3s ease;
-            margin-top: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 20px rgba(127, 0, 255, 0.3);
         }
 
         .solve-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            background: linear-gradient(45deg, #4ecdc4, #ff6b6b);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 26px rgba(127, 0, 255, 0.45);
+            background: linear-gradient(135deg, #8f1aff 0%, #eb1aff 100%);
+        }
+
+        .solve-button:active {
+            transform: translateY(0);
         }
 
         /* Enhanced Result Section */
         .result-box {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.04);
             border-radius: 20px;
             padding: 30px;
-            margin-top: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-left: 4px solid #00f2fe;
             backdrop-filter: blur(15px);
             animation: slideInUp 0.6s ease-out;
-            display: none;
         }
 
         @keyframes slideInUp {
@@ -203,40 +472,52 @@
         }
 
         .result-box h3 {
-            color: #4ecdc4;
-            font-size: 1.5em;
-            margin-bottom: 15px;
-            text-align: center;
+            color: #00f2fe;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .result-content {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            border-radius: 15px;
-            margin: 15px 0;
+            background: transparent;
+            padding: 0;
+            border-radius: 0;
+            margin: 0;
             color: #fff;
-            font-family: 'Courier New', monospace;
-            font-size: 1.1em;
-            line-height: 1.6;
         }
 
         .answer-display {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            color: #fff;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 10px 0;
-            font-size: 1.3em;
-            font-weight: bold;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 1.25rem;
+            font-weight: 700;
             text-align: center;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .steps-display {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 10px 0;
-            border-left: 4px solid #4ecdc4;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .steps-display h4 {
+            color: #b0b3c6;
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         /* Loading Animation */
@@ -244,11 +525,12 @@
             display: none;
             width: 40px;
             height: 40px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid #4ecdc4;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid #00f2fe;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 20px auto;
+            margin: 24px auto 0;
+            filter: drop-shadow(0 0 6px rgba(0, 242, 254, 0.4));
         }
 
         @keyframes spin {
@@ -259,99 +541,188 @@
         /* Error/Success Messages */
         .message {
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 12px;
             margin: 15px 0;
             text-align: center;
             font-weight: 600;
         }
 
         .message.success {
-            background: rgba(76, 175, 80, 0.2);
+            background: rgba(76, 175, 80, 0.15);
             color: #4caf50;
-            border: 1px solid rgba(76, 175, 80, 0.5);
+            border: 1px solid rgba(76, 175, 80, 0.3);
         }
 
         .message.error {
-            background: rgba(244, 67, 54, 0.2);
+            background: rgba(244, 67, 54, 0.15);
             color: #f44336;
-            border: 1px solid rgba(244, 67, 54, 0.5);
+            border: 1px solid rgba(244, 67, 54, 0.3);
         }
 
         /* Quick Action Buttons */
         .quick-actions {
             display: flex;
             gap: 10px;
-            margin: 20px 0;
+            margin-bottom: 20px;
             flex-wrap: wrap;
+            justify-content: center;
         }
 
         .quick-btn {
-            padding: 8px 15px;
-            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.04);
             color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             cursor: pointer;
-            font-size: 0.9em;
+            font-size: 0.95em;
+            font-weight: 500;
             transition: all 0.3s ease;
         }
 
         .quick-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #a259ff;
+            box-shadow: 0 0 15px rgba(162, 89, 255, 0.25);
             transform: translateY(-2px);
         }
 
         /* Download Buttons */
         .download-section {
-            margin-top: 20px;
+            margin-top: 24px;
             text-align: center;
             display: flex;
             gap: 15px;
             justify-content: center;
             flex-wrap: wrap;
+            align-items: center;
         }
 
         .download-btn {
-            padding: 12px 20px;
-            background: linear-gradient(45deg, #28a745, #20c997);
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
             color: #fff;
             border: none;
-            border-radius: 25px;
+            border-radius: 12px;
             cursor: pointer;
-            font-size: 1em;
-            font-weight: 600;
+            font-size: 0.95rem;
+            font-weight: 700;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 8px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            box-shadow: 0 4px 15px rgba(56, 239, 125, 0.25);
         }
 
         .download-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
-            background: linear-gradient(45deg, #20c997, #28a745);
+            box-shadow: 0 6px 20px rgba(56, 239, 125, 0.4);
         }
 
         .download-btn.pdf {
-            background: linear-gradient(45deg, #dc3545, #fd7e14);
-            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+            box-shadow: 0 4px 15px rgba(255, 75, 43, 0.25);
         }
 
         .download-btn.pdf:hover {
-            background: linear-gradient(45deg, #fd7e14, #dc3545);
-            box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+            box-shadow: 0 6px 20px rgba(255, 75, 43, 0.4);
         }
 
         .download-btn i {
             font-size: 1.1em;
         }
 
+        /* Upload Container & Box */
+        .upload-container {
+            margin: 24px 0;
+        }
+
+        .upload-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .upload-box:hover {
+            border-color: #00f2fe;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+        }
+
+        .upload-icon {
+            font-size: 2.2rem;
+            color: #00f2fe;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 0 6px rgba(0, 242, 254, 0.4));
+            transition: transform 0.3s ease;
+        }
+
+        .upload-box:hover .upload-icon {
+            transform: translateY(-4px);
+        }
+
+        .upload-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .upload-subtitle {
+            font-size: 0.85rem;
+            color: #8c8fa7;
+            margin-bottom: 10px;
+        }
+
+        .file-name-display {
+            font-size: 0.9rem;
+            color: #00f2fe;
+            font-weight: 500;
+            background: rgba(0, 242, 254, 0.1);
+            padding: 4px 12px;
+            border-radius: 12px;
+            display: none;
+            margin-top: 8px;
+            border: 1px solid rgba(0, 242, 254, 0.2);
+        }
+
+        .upload-box input[type="file"] {
+            display: none;
+        }
+
+        /* Testimonials Section Cards */
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 340px;
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .app-name {
-                font-size: 2.5em;
+                font-size: 2.2rem;
             }
             
             .main-box {
@@ -359,10 +730,16 @@
                 padding: 25px;
             }
             
-            .nav-links {
+            .nav-content {
                 flex-direction: column;
                 gap: 15px;
-                padding: 20px;
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
             }
 
             .download-section {
@@ -378,13 +755,26 @@
     </style>
 </head>
 <body>
+    <!-- Glowing background spheres -->
+    <div class="glow-bg">
+        <div class="glow-sphere glow-1"></div>
+        <div class="glow-sphere glow-2"></div>
+    </div>
+
     <!-- Enhanced Navigation -->
     <div class="nav-container">
-        <div class="nav-links">
-            <a href="{{ url_for('home_page') }}"><i class="fas fa-home"></i> Home</a>
-            <a href="{{ url_for('faq_page') }}"><i class="fas fa-question-circle"></i> FAQ</a>
-            <a href="{{ url_for('about_page') }}"><i class="fas fa-info-circle"></i> About</a>
-            <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        <div class="nav-content">
+            <a href="{{ url_for('solve') }}" class="nav-brand">
+                <i class="fas fa-calculator"></i>
+                <span class="brand-text">Math Solver AI</span>
+            </a>
+            <div class="nav-links">
+                <a href="{{ url_for('solve') }}" class="active"><i class="fas fa-home"></i> Home</a>
+                <a href="{{ url_for('faq_page') }}"><i class="fas fa-question-circle"></i> FAQ</a>
+                <a href="{{ url_for('about_page') }}"><i class="fas fa-info-circle"></i> About</a>
+                <a href="{{ url_for('show_reviews') }}"><i class="fas fa-star"></i> Reviews</a>
+                <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
         </div>
     </div>
 
@@ -397,24 +787,140 @@
     <div class="main-box">
         <h1><i class="fas fa-calculator"></i> Solve Any Math Problem Instantly</h1>
         <p>Type your math problem and get instant solutions with step-by-step explanations!</p>
+
+        {% if not gemini_key_set %}
+        <div class="message error" style="margin-bottom: 25px; font-size: 0.95em; text-align: left; background: rgba(255, 193, 7, 0.1); color: #ffe066; border: 1px solid rgba(255, 193, 7, 0.3); padding: 15px; border-radius: 10px; line-height: 1.5;">
+            <i class="fas fa-exclamation-triangle" style="color: #ffc107; font-size: 1.1em; margin-right: 5px;"></i>
+            <strong>Gemini AI mode is currently disabled</strong> because <code>GEMINI_API_KEY</code> is not configured.
+            The site is running in local SymPy + PyTesseract fallback mode. To solve all types of math problems and complex images:
+            <ol style="margin-left: 20px; margin-top: 8px;">
+                <li>Create a <code>.env</code> file in the project's root folder.</li>
+                <li>Add: <code>GEMINI_API_KEY=your_actual_api_key_here</code></li>
+                <li>Restart your Flask server.</li>
+            </ol>
+        </div>
+        {% endif %}
         
         <!-- Form for server-side solving -->
         <form method="POST" action="{{ url_for('solve') }}" enctype="multipart/form-data">
             <div class="input-area">
-                <!-- Enhanced Example Dropdown -->
-                <select id="example_queries" class="example-dropdown" onchange="fillExample(this.value)">
-                    <option value="">-- Choose Example Problem --</option>
-                    <option value="2*x + 3*x">Simple Algebra: 2*x + 3*x</option>
-                    <option value="sqrt(16)">Square Root: √16</option>
-                    <option value="2^3 + 4*5">Arithmetic: 2³ + 4×5</option>
-                    <option value="sin(pi/2)">Trigonometry: sin(π/2)</option>
-                    <option value="derivative x^3 + 2*x^2 wrt x">Calculus: Derivative of x³ + 2x²</option>
-                    <option value="integral x^2 wrt x">Calculus: Integral of x²</option>
-                    <option value="log(100, 10)">Logarithm: log₁₀(100)</option>
-                    <option value="factorial(5)">Factorial: 5!</option>
-                    <option value="area of circle with radius 5">Geometry: Circle Area</option>
-                    <option value="x^2 - 4 = 0">Equation: x² - 4 = 0</option>
-                </select>
+                <!-- Custom Stylish Dropdown -->
+                <div class="custom-dropdown-container">
+                    <div class="custom-dropdown-trigger" onclick="toggleDropdown()">
+                        <span><i class="fas fa-search-plus trigger-icon"></i> <span id="selected-option-label">-- Choose Example Problem --</span></span>
+                        <span class="arrow-icon"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="custom-dropdown-menu" id="custom-dropdown-menu">
+                        <div class="dropdown-search-wrapper">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="dropdown-search" placeholder="Search examples..." onkeyup="filterExamples(this.value)" onclick="event.stopPropagation()">
+                        </div>
+                        <div class="dropdown-categories">
+                            <div class="category-section">
+                                <div class="category-header"><i class="fas fa-calculator"></i> Basic Math &amp; Arithmetic</div>
+                                <div class="category-items">
+                                    <div class="dropdown-item" data-value="2^3 + 4*5" onclick="selectExample('Arithmetic: 2³ + 4×5', '2^3 + 4*5')">
+                                        <span class="item-name">Arithmetic</span>
+                                        <code class="item-code">2³ + 4×5</code>
+                                    </div>
+                                    <div class="dropdown-item" data-value="sqrt(16)" onclick="selectExample('Square Root: √16', 'sqrt(16)')">
+                                        <span class="item-name">Square Root</span>
+                                        <code class="item-code">√16</code>
+                                    </div>
+                                    <div class="dropdown-item" data-value="factorial(5)" onclick="selectExample('Factorial: 5!', 'factorial(5)')">
+                                        <span class="item-name">Factorial</span>
+                                        <code class="item-code">5!</code>
+                                    </div>
+                                    <div class="dropdown-item" data-value="log(100, 10)" onclick="selectExample('Logarithm: log₁₀(100)', 'log(100, 10)')">
+                                        <span class="item-name">Logarithm</span>
+                                        <code class="item-code">log₁₀(100)</code>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-section">
+                                <div class="category-header"><i class="fas fa-square-root-alt"></i> Algebra &amp; Trigonometry</div>
+                                <div class="category-items">
+                                    <div class="dropdown-item" data-value="2*x + 3*x" onclick="selectExample('Simple Algebra: 2*x + 3*x', '2*x + 3*x')">
+                                        <span class="item-name">Simple Algebra</span>
+                                        <code class="item-code">2x + 3x</code>
+                                    </div>
+                                    <div class="dropdown-item" data-value="x^2 - 4 = 0" onclick="selectExample('Equation: x² - 4 = 0', 'x^2 - 4 = 0')">
+                                        <span class="item-name">Quadratic Equation</span>
+                                        <code class="item-code">x² - 4 = 0</code>
+                                    </div>
+                                    <div class="dropdown-item" data-value="sin(pi/2)" onclick="selectExample('Trigonometry: sin(π/2)', 'sin(pi/2)')">
+                                        <span class="item-name">Trigonometry</span>
+                                        <code class="item-code">sin(π/2)</code>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-section">
+                                <div class="category-header"><i class="fas fa-wave-square"></i> Calculus &amp; Analysis</div>
+                                <div class="category-items">
+                                    <div class="dropdown-item" data-value="derivative x^3 + 2*x^2 wrt x" onclick="selectExample('Calculus: Derivative of x³ + 2x²', 'derivative x^3 + 2*x^2 wrt x')">
+                                        <span class="item-name">Derivative</span>
+                                        <code class="item-code">d/dx(x³ + 2x²)</code>
+                                    </div>
+                                    <div class="dropdown-item" data-value="integral x^2 wrt x" onclick="selectExample('Calculus: Integral of x²', 'integral x^2 wrt x')">
+                                        <span class="item-name">Integral</span>
+                                        <code class="item-code">∫ x² dx</code>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="category-section">
+                                <div class="category-header"><i class="fas fa-dice"></i> Probability &amp; Combinatorics</div>
+                                <div class="category-items">
+                                    <div class="dropdown-item" data-value="permutations of the word SUCCESS" onclick="selectExample('Permutation: SUCCESS', 'permutations of the word SUCCESS')">
+                                        <span class="item-name">Permutations</span>
+                                        <code class="item-code">SUCCESS</code>
+                                    </div>
+                                    <div class="dropdown-item" data-value="how many ways to choose 4 players from 10" onclick="selectExample('Combination: Choose 4 from 10', 'how many ways to choose 4 players from 10')">
+                                        <span class="item-name">Combinations</span>
+                                        <code class="item-code">Choose 4 from 10</code>
+                                    </div>
+                                    <div class="dropdown-item" data-value="bag has 3 red and 5 blue balls. draw 2 red balls without replacement" onclick="selectExample('Probability: Ball Draw', 'bag has 3 red and 5 blue balls. draw 2 red balls without replacement')">
+                                        <span class="item-name">Probability</span>
+                                        <code class="item-code">Draw balls</code>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="category-section">
+                                <div class="category-header"><i class="fas fa-shapes"></i> Geometry</div>
+                                <div class="category-items">
+                                    <div class="dropdown-item" data-value="area of circle with radius 5" onclick="selectExample('Geometry: Circle Area', 'area of circle with radius 5')">
+                                        <span class="item-name">Circle Area</span>
+                                        <code class="item-code">Area (r=5)</code>
+                                    </div>
+                                    <div class="dropdown-item" data-value="area of triangle with base 6 and height 4" onclick="selectExample('Geometry: Triangle Area', 'area of triangle with base 6 and height 4')">
+                                        <span class="item-name">Triangle Area</span>
+                                        <code class="item-code">Area (b=6, h=4)</code>
+                                    </div>
+                                    <div class="dropdown-item" data-value="area of rhombus with diagonals 8 and 10" onclick="selectExample('Geometry: Rhombus Area', 'area of rhombus with diagonals 8 and 10')">
+                                        <span class="item-name">Rhombus Area</span>
+                                        <code class="item-code">Area (d1=8, d2=10)</code>
+                                    </div>
+                                    <div class="dropdown-item" data-value="area of rectangle with width 8 and height 5" onclick="selectExample('Geometry: Rectangle Area', 'area of rectangle with width 8 and height 5')">
+                                        <span class="item-name">Rectangle Area</span>
+                                        <code class="item-code">Area (w=8, h=5)</code>
+                                    </div>
+                                    <div class="dropdown-item" data-value="area of square with side 6" onclick="selectExample('Geometry: Square Area', 'area of square with side 6')">
+                                        <span class="item-name">Square Area</span>
+                                        <code class="item-code">Area (s=6)</code>
+                                    </div>
+                                    <div class="dropdown-item" data-value="area of parallelogram with base 7 and height 5" onclick="selectExample('Geometry: Parallelogram Area', 'area of parallelogram with base 7 and height 5')">
+                                        <span class="item-name">Parallelogram Area</span>
+                                        <code class="item-code">Area (b=7, h=5)</code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="example_queries" name="example_queries" value="">
 
                 <!-- Quick Action Buttons -->
                 <div class="quick-actions">
@@ -433,29 +939,22 @@
                          placeholder="Type your math problem here...
 
 Examples:
-• Basic: 2 + 3 * 4
-• Algebra: 2*x + 3*x, solve x^2 - 4 = 0
-• Powers: 2^3 + sqrt(16)
-• Trigonometry: sin(pi/2) + cos(0)
-• Calculus: derivative x^2 wrt x, integral x^2 wrt x
-• Factorial: factorial(5)
-• Geometry: area of circle with radius 5
-• Logarithm: log(100)">{{ spoken_expr }}</textarea>
+• Algebra: solve x^2 - 4 = 0
+• Calculus: derivative x^2 wrt x
+• Permutations: P(8, 3) or permutations of word SUCCESS
+• Combinations: C(10, 4) or how many ways to choose 4 players from 10
+• Coins/Dice Probability: probability of exactly 3 heads in 5 tosses
+• Card/Bag Probability: bag has 3 red, 5 blue balls. draw 2 red balls without replacement">{{ spoken_expr }}</textarea>
 
-                <!-- Image Upload Option -->
-                <div style="margin: 15px 0;">
-                    <label for="image" style="color: #fff; font-weight: 600; margin-bottom: 10px; display: block;">
-                        <i class="fas fa-camera"></i> Or upload an image of your math problem:
+                <!-- Image Upload Option (Enhanced Custom Drag & Drop Box) -->
+                <div class="upload-container">
+                    <label class="upload-box" for="image">
+                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                        <span class="upload-title">Drag & drop or click to upload image</span>
+                        <span class="upload-subtitle">Supports PNG, JPG, JPEG, BMP (Max 5MB)</span>
+                        <span id="file-name" class="file-name-display">No file chosen</span>
+                        <input type="file" id="image" name="image" accept="image/*" onchange="showFileName(this)">
                     </label>
-                    <input type="file" id="image" name="image" accept="image/*" style="
-                        width: 100%;
-                        padding: 10px;
-                        border: 2px solid rgba(255, 255, 255, 0.3);
-                        border-radius: 10px;
-                        background: rgba(255, 255, 255, 0.15);
-                        color: #fff;
-                        font-size: 1em;
-                    ">
                 </div>
 
                 <!-- Enhanced Solve Button -->
@@ -507,51 +1006,51 @@ Examples:
     </div> <!-- End of .main-box -->
 
     <!-- Testimonial Section -->
-    <section style="background: #faf9ff; padding: 60px 0;">
-        <div style="max-width: 1100px; margin: 0 auto;">
-            <h2 style="text-align:center; font-size:2.5em; font-weight:bold; margin-bottom:10px; color:#222;">
+    <section style="padding: 80px 0; position: relative; z-index: 1;">
+        <div style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+            <h2 style="text-align:center; font-size:2.2em; font-weight:800; margin-bottom:12px; background: linear-gradient(to right, #ffffff, #cda7ff); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
                 What Users Say About Our AI Math Solver
             </h2>
-            <p style="text-align:center; font-size:1.2em; color:#555; margin-bottom:40px;">
+            <p style="text-align:center; font-size:1.1em; color:#b0b3c6; font-weight:300; margin-bottom:50px;">
                 Join thousands of students and educators who trust our AI math helper for their daily math challenges.
             </p>
             <div style="display:flex; flex-wrap:wrap; gap:30px; justify-content:center;">
                 <!-- Testimonial 1 -->
-                <div style="background:#fff; border-radius:18px; box-shadow:0 4px 24px rgba(0,0,0,0.07); padding:30px; max-width:340px; flex:1;">
-                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sandhiya" style="width:48px; height:48px; border-radius:50%; border:3px solid #e0e7ff;">
-                        <span style="font-weight:600; font-size:1.1em;">Sandhiya</span>
+                <div class="testimonial-card">
+                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:15px;">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sandhiya" style="width:48px; height:48px; border-radius:50%; border:2px solid #00f2fe; box-shadow: 0 0 10px rgba(0, 242, 254, 0.4);">
+                        <div>
+                            <div style="font-weight:700; font-size:1.05em; color: #fff;">Sandhiya</div>
+                            <div style="color:#f7b731; font-size:0.9em;">★★★★★</div>
+                        </div>
                     </div>
-                    <div style="color:#f7b731; font-size:1.3em; margin-bottom:10px;">
-                        ★★★★★
-                    </div>
-                    <div style="color:#333; font-size:1em;">
+                    <div style="color:#b0b3c6; font-size:0.95em; line-height: 1.6; font-weight: 300;">
                         The AI math solver with steps has been a game-changer for my homework. I love how I can just take a picture of my math problem and get instant, detailed solutions. The step-by-step explanations really help me understand the concepts better.
                     </div>
                 </div>
                 <!-- Testimonial 2 -->
-                <div style="background:#fff; border-radius:18px; box-shadow:0 4px 24px rgba(0,0,0,0.07); padding:30px; max-width:340px; flex:1;">
-                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Ram" style="width:48px; height:48px; border-radius:50%; border:3px solid #e0e7ff;">
-                        <span style="font-weight:600; font-size:1.1em;">Ram</span>
+                <div class="testimonial-card">
+                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:15px;">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Ram" style="width:48px; height:48px; border-radius:50%; border:2px solid #a259ff; box-shadow: 0 0 10px rgba(162, 89, 255, 0.4);">
+                        <div>
+                            <div style="font-weight:700; font-size:1.05em; color: #fff;">Ram</div>
+                            <div style="color:#f7b731; font-size:0.9em;">★★★★★</div>
+                        </div>
                     </div>
-                    <div style="color:#f7b731; font-size:1.3em; margin-bottom:10px;">
-                        ★★★★★
-                    </div>
-                    <div style="color:#333; font-size:1em;">
+                    <div style="color:#b0b3c6; font-size:0.95em; line-height: 1.6; font-weight: 300;">
                         As a teacher, I recommend this AI math helper to my students. The ability to solve word problems and provide detailed explanations makes it an excellent learning tool. The free online access means everyone can benefit from it.
                     </div>
                 </div>
                 <!-- Testimonial 3 -->
-                <div style="background:#fff; border-radius:18px; box-shadow:0 4px 24px rgba(0,0,0,0.07); padding:30px; max-width:340px; flex:1;">
-                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emma Thompson" style="width:48px; height:48px; border-radius:50%; border:3px solid #e0e7ff;">
-                        <span style="font-weight:600; font-size:1.1em;">Emma Thompson</span>
+                <div class="testimonial-card">
+                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:15px;">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emma Thompson" style="width:48px; height:48px; border-radius:50%; border:2px solid #e100ff; box-shadow: 0 0 10px rgba(225, 0, 255, 0.4);">
+                        <div>
+                            <div style="font-weight:700; font-size:1.05em; color: #fff;">Emma Thompson</div>
+                            <div style="color:#f7b731; font-size:0.9em;">★★★★☆</div>
+                        </div>
                     </div>
-                    <div style="color:#f7b731; font-size:1.3em; margin-bottom:10px;">
-                        ★★★★
-                    </div>
-                    <div style="color:#333; font-size:1em;">
+                    <div style="color:#b0b3c6; font-size:0.95em; line-height: 1.6; font-weight: 300;">
                         The Chrome extension for this AI math solver is incredibly convenient. Whether I'm working on PDFs or screenshots, I can quickly get solutions without switching between apps. It's become my go-to math calculator and problem solver.
                     </div>
                 </div>
@@ -561,11 +1060,84 @@ Examples:
 
     <!-- JavaScript for Math Solving -->
     <script>
-        // Fill example into input
-        function fillExample(example) {
-            if (example) {
-                document.getElementById('expression').value = example;
+        // Toggle Custom Dropdown Menu
+        function toggleDropdown() {
+            const menu = document.getElementById('custom-dropdown-menu');
+            const trigger = document.querySelector('.custom-dropdown-trigger');
+            
+            const isShown = menu.classList.contains('show');
+            if (isShown) {
+                menu.classList.remove('show');
+                trigger.classList.remove('active');
+            } else {
+                menu.classList.add('show');
+                trigger.classList.add('active');
+                // Focus search input
+                setTimeout(() => {
+                    document.getElementById('dropdown-search').focus();
+                }, 100);
             }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const container = document.querySelector('.custom-dropdown-container');
+            const menu = document.getElementById('custom-dropdown-menu');
+            const trigger = document.querySelector('.custom-dropdown-trigger');
+            
+            if (container && !container.contains(event.target)) {
+                if (menu && menu.classList.contains('show')) {
+                    menu.classList.remove('show');
+                    trigger.classList.remove('active');
+                }
+            }
+        });
+
+        // Select Example
+        function selectExample(label, value) {
+            document.getElementById('expression').value = value;
+            document.getElementById('selected-option-label').textContent = label;
+            document.getElementById('selected-option-label').style.color = '#ffffff';
+            document.getElementById('example_queries').value = value;
+            
+            // Close dropdown
+            const menu = document.getElementById('custom-dropdown-menu');
+            const trigger = document.querySelector('.custom-dropdown-trigger');
+            menu.classList.remove('show');
+            trigger.classList.remove('active');
+            
+            // Focus expression input
+            document.getElementById('expression').focus();
+        }
+
+        // Filter Examples on search
+        function filterExamples(query) {
+            const filter = query.toLowerCase();
+            const categories = document.querySelectorAll('.category-section');
+            
+            categories.forEach(section => {
+                let hasVisibleItems = false;
+                const sectionItems = section.querySelectorAll('.dropdown-item');
+                
+                sectionItems.forEach(item => {
+                    const name = item.querySelector('.item-name').textContent.toLowerCase();
+                    const val = item.getAttribute('data-value').toLowerCase();
+                    
+                    if (name.includes(filter) || val.includes(filter)) {
+                        item.style.display = 'flex';
+                        hasVisibleItems = true;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                // Hide category if no visible items
+                if (hasVisibleItems) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
         }
 
         // Insert mathematical symbols
@@ -607,6 +1179,8 @@ Examples:
         function clearAll() {
             document.getElementById('expression').value = '';
             document.getElementById('example_queries').value = '';
+            document.getElementById('selected-option-label').textContent = '-- Choose Example Problem --';
+            document.getElementById('selected-option-label').style.color = '#b0b3c6';
             const resultBox = document.getElementById('resultBox');
             if (resultBox) {
                 resultBox.style.display = 'none';
@@ -644,6 +1218,18 @@ Examples:
                 document.querySelector('form').submit();
             }
         });
+
+        // Show selected file name in custom upload UI
+        function showFileName(input) {
+            const fileNameDisplay = document.getElementById('file-name');
+            if (input.files && input.files[0]) {
+                fileNameDisplay.textContent = 'Selected: ' + input.files[0].name;
+                fileNameDisplay.style.display = 'inline-block';
+            } else {
+                fileNameDisplay.textContent = '';
+                fileNameDisplay.style.display = 'none';
+            }
+        }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
