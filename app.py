@@ -30,8 +30,8 @@ import statistics as py_stats
 from dotenv import load_dotenv
 import google.generativeai as genai
 
-# Load environment variables
-load_dotenv()
+# Load environment variables from .env file
+load_dotenv(override=True)
 
 # ✅ Tesseract path
 import sys
@@ -91,79 +91,100 @@ def sympy_to_display(expr):
         return str(expr)
 
 
-def solve_math_with_gemini(expression_input, image_file=None):
+def solve_math_with_gemini(expression_input, image_file=None, language='en'):
     """Solve math problem using Gemini API with step-by-step reasoning"""
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
         return "API Key Missing", "❌ GEMINI_API_KEY is not set. Please set it in your environment or .env file."
 
-    try:
-        # Re-configure if not already configured
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-2.5-flash')
-        
-        prompt = (
-            "You are an expert AI mathematics tutor and solver.\n"
-            "Solve the following mathematical problem step-by-step with clear, correct explanations. "
-            "You must format your response exactly as follows, enclosing sections in the specified tags:\n"
-            "<answer>Your final concise answer or solution here (e.g. Option D: 9/20 or x = 5)</answer>\n"
-            "<steps>\n"
-            "Your step-by-step detailed explanation and working here. Keep it clean, readable, and structured.\n"
-            "</steps>\n\n"
-        )
-        
-        if expression_input:
-            prompt += f"Problem to solve: {expression_input}\n"
-        else:
-            prompt += "Solve the mathematical problem presented in this image.\n"
+    # Try a list of model names to handle rate limits and availability
+    models_to_try = [
+        'gemini-3.5-flash',
+        'gemini-3.1-flash-lite',
+        'gemini-2.5-flash',
+        'gemini-2.0-flash'
+    ]
+    
+    last_error = None
+    for model_name in models_to_try:
+        try:
+            # Re-configure if not already configured
+            genai.configure(api_key=api_key)
+            model = genai.GenerativeModel(model_name)
+            
+            lang_name = "English"
+            if language == "te":
+                lang_name = "Telugu"
+            elif language == "ta":
+                lang_name = "Tamil"
+            
+            prompt = (
+                "You are an expert AI mathematics tutor and solver.\n"
+                f"Solve the following mathematical problem step-by-step with clear, correct explanations in {lang_name} language. "
+                "You must format your response exactly as follows, enclosing sections in the specified tags:\n"
+                f"<answer>Your final concise answer or solution here in {lang_name} (e.g. in {lang_name} like x = 5 or సమాధానం: 40 or விடை: 40)</answer>\n"
+                "<steps>\n"
+                f"Your step-by-step detailed explanation and working here in {lang_name} language. Keep it clean, readable, and structured.\n"
+                "</steps>\n\n"
+            )
+            
+            if expression_input:
+                prompt += f"Problem to solve: {expression_input}\n"
+            else:
+                prompt += "Solve the mathematical problem presented in this image.\n"
 
-        if image_file:
-            response = model.generate_content([image_file, prompt])
-        else:
-            response = model.generate_content(prompt)
+            if image_file:
+                response = model.generate_content([image_file, prompt])
+            else:
+                response = model.generate_content(prompt)
 
-        text = response.text
-        
-        # Parse tags
-        answer = ""
-        steps = ""
-        
-        ans_match = re.search(r'<answer>(.*?)</answer>', text, re.DOTALL)
-        if ans_match:
-            answer = ans_match.group(1).strip()
+            text = response.text
             
-        steps_match = re.search(r'<steps>(.*?)</steps>', text, re.DOTALL)
-        if steps_match:
-            steps = steps_match.group(1).strip()
+            # Parse tags
+            answer = ""
+            steps = ""
             
-        if not answer and not steps:
-            # Fallback parsing
-            if "<answer>" in text:
-                parts = text.split("<answer>")
-                if len(parts) > 1:
-                    subparts = parts[1].split("</answer>")
-                    answer = subparts[0].strip()
-            if "<steps>" in text:
-                parts = text.split("<steps>")
-                if len(parts) > 1:
-                    subparts = parts[1].split("</steps>")
-                    steps = subparts[0].strip()
-            
+            ans_match = re.search(r'<answer>(.*?)</answer>', text, re.DOTALL)
+            if ans_match:
+                answer = ans_match.group(1).strip()
+                
+            steps_match = re.search(r'<steps>(.*?)</steps>', text, re.DOTALL)
+            if steps_match:
+                steps = steps_match.group(1).strip()
+                
             if not answer and not steps:
-                # Direct fallback if tags completely failed
-                lines = [line for line in text.split('\n') if line.strip()]
-                if lines:
-                    answer = lines[0]
-                steps = text
+                # Fallback parsing
+                if "<answer>" in text:
+                    parts = text.split("<answer>")
+                    if len(parts) > 1:
+                        subparts = parts[1].split("</answer>")
+                        answer = subparts[0].strip()
+                if "<steps>" in text:
+                    parts = text.split("<steps>")
+                    if len(parts) > 1:
+                        subparts = parts[1].split("</steps>")
+                        steps = subparts[0].strip()
+                
+                if not answer and not steps:
+                    # Direct fallback if tags completely failed
+                    lines = [line for line in text.split('\n') if line.strip()]
+                    if lines:
+                        answer = lines[0]
+                    steps = text
 
-        # Replace any residual raw html tags
-        answer = re.sub(r'</?(answer|steps)>', '', answer).strip()
-        steps = re.sub(r'</?(answer|steps)>', '', steps).strip()
+            # Replace any residual raw html tags
+            answer = re.sub(r'</?(answer|steps)>', '', answer).strip()
+            steps = re.sub(r'</?(answer|steps)>', '', steps).strip()
 
-        return answer, steps
+            return answer, steps
 
-    except Exception as e:
-        return "Error", f"❌ Failed to solve using Gemini API: {str(e)}"
+        except Exception as e:
+            last_error = e
+            # Log the error to console and continue to the next model
+            print(f"Error with model {model_name}: {str(e)}")
+            continue
+
+    return "Error", f"❌ Failed to solve using Gemini API: {str(last_error)}"
 
 
 # ─────────────────────────────────────────────
@@ -2200,9 +2221,12 @@ def solve():
     result = session.get('result', '')
     steps = session.get('steps', '')
     expression_input = session.get('expression', '')
+    language = session.get('language', 'en')
 
     if request.method == "POST":
         expression_input = request.form.get("expression", "").strip()
+        language = request.form.get("language", "en").strip()
+        session['language'] = language
 
         # Handle image upload
         image = request.files.get('image')
@@ -2243,7 +2267,7 @@ def solve():
                 flash("❌ Please enter a math expression or upload an image.")
                 return redirect(url_for('solve'))
             
-            result, steps = solve_math_with_gemini(expression_input, img_for_gemini)
+            result, steps = solve_math_with_gemini(expression_input, img_for_gemini, language=language)
             
             if result != "Error" and "Failed to solve using Gemini API" not in steps:
                 solved_with_gemini = True
@@ -2265,8 +2289,10 @@ def solve():
             
             if gemini_api_key:
                 result = local_result
+                error_detail = steps if steps else "Rate limit or quota exceeded"
                 steps = (
-                    "⚠️ **Gemini API Rate Limit / Quota Exceeded**\n"
+                    "⚠️ **Gemini API Rate Limit / Quota Exceeded (or API Error)**\n"
+                    f"Detail: {error_detail}\n\n"
                     "The Gemini API free tier rate limit was reached. We have automatically fallen back to "
                     "our local SymPy-based mathematical engine to solve your problem.\n\n"
                     "**Local Solver Output:**\n"
@@ -2309,7 +2335,8 @@ def solve():
         steps=steps,
         spoken_expr=expression_input,
         word_problem=False,
-        gemini_key_set=bool(os.environ.get("GEMINI_API_KEY"))
+        gemini_key_set=bool(os.environ.get("GEMINI_API_KEY")),
+        language=language
     )
 
 
@@ -2322,14 +2349,17 @@ def api_solve():
         return jsonify({"error": "Not authenticated"}), 401
     data = request.json or {}
     expression = data.get("expression", "").strip()
+    language = data.get("language", "en").strip()
     if not expression:
         return jsonify({"error": "No expression provided"}), 400
     
     gemini_api_key = os.environ.get("GEMINI_API_KEY")
     if gemini_api_key:
-        result, steps = solve_math_with_gemini(expression)
+        result, steps = solve_math_with_gemini(expression, language=language)
     else:
         result, steps = auto_solve_math(expression)
+        
+    return jsonify({"result": result, "steps": steps})
         
     return jsonify({"result": result, "steps": steps})
 
@@ -2410,6 +2440,8 @@ def faq_page():
 @app.route('/about')
 def about_page():
     return render_template('about.html')
+
+
 
 @app.route('/home')
 def home_page():
