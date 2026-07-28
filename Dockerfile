@@ -11,7 +11,7 @@ WORKDIR /app
 # Copy and install Python dependencies (installing gunicorn explicitly)
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt gunicorn
-
+ 
 # Copy the rest of the application
 COPY . .
 
