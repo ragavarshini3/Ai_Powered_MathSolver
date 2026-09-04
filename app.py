@@ -28,7 +28,7 @@ from datetime import timedelta
 from werkzeug.utils import secure_filename
 import statistics as py_stats
 from dotenv import load_dotenv
-import google.generativeai as genai
+import google.generativeai as genai 
 
 # Load environment variables from .env file
 load_dotenv(override=True)
